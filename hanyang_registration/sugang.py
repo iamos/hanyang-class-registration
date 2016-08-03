@@ -17,6 +17,7 @@ class Sinchung(object):
     SUGANG_URL = API_URL + '/sugang/sulg.do'
     LOGIN_URL = API_URL + '/sugang/lgnps.do'
     SINCHUNG_URL = API_URL + '/sugang/SgscAct/saveSugangSincheong2.do'
+    CAPCHA_URL = API_URL + '/sugang/SgscAct/resetCaptchaTryCnt.do'
 
     def __init__(self, verbose=True, erica=True):
         """
@@ -119,6 +120,7 @@ class Sinchung(object):
                         IN_HGT_SUUP_FLAG=0,
                         IN_SUUP_NO=code,
                         strReturnPopupYn='N')
+            recap_req = self.session.post(self.CAPCHA_URL)
             req = self.session.post(self.SINCHUNG_URL, data=json.dumps(data), headers=headers)
             result = json.loads(req.text)
             self.logger.info(
